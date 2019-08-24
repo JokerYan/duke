@@ -32,6 +32,10 @@ shadowJar {
     archiveAppendix = null
 }
 
+run {
+    standardInput = System.in;
+}
+
 test {
     useJUnitPlatform()
 }
