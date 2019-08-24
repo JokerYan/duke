@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    static private ArrayList<String> inputList;
+    private static ArrayList<Task> taskList;
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -17,7 +17,7 @@ public class Duke {
         list();
     }
 
-    private static void echo(){
+    private static void echo() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while(!input.equals("bye")){
@@ -27,18 +27,61 @@ public class Duke {
         System.out.println("Bye. Hope to see you again!");
     }
 
-    private static void list(){
-        inputList = new ArrayList<String>();
+    public static class Task {
+        private String name;
+        private boolean done;
+        public Task(String name) {
+            this.name = name;
+            this.done = false;
+        }
+
+        public void markDone() {
+            this.done = true;
+        }
+
+        public boolean getDone() {
+            return this.done;
+        }
+
+        public String getStatus() {
+            if(this.done){
+                return "[\u2713] " + this.name;
+            }else{
+                return "[\u2718] " + this.name;
+            }
+        }
+    }
+
+    private static void list() {
+        taskList = new ArrayList<Task>();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while(!input.equals("bye")){
-            if(!input.equals("list")){
-                inputList.add(input);
+            if(input.startsWith("done")){
+                if(input.length() <= 5) {
+                    System.out.println("Please enter index of task after \'done\'");
+                }else{
+                    try {
+                        int index = Integer.parseInt(input.substring(5)) - 1;
+                        if(index < 0 || index >= taskList.size()){
+                            System.out.println("Invalid index");
+                        }else{
+                            taskList.get(index).markDone();
+                            System.out.println("Nice! I've marked this task as done:");
+                            System.out.println(taskList.get(index).getStatus());
+                        }
+                    } catch (NumberFormatException e){
+                        System.out.println("Please enter task index");
+                    }
+                }
+            }else if(!input.equals("list")){
+                taskList.add(new Task(input));
                 System.out.println("added: " + input);
             }else{
-                for(int i = 0; i < inputList.size(); i++){
+                System.out.println("Here are the tasks in your list:");
+                for(int i = 0; i < taskList.size(); i++){
                     System.out.print(i + 1);
-                    System.out.println(". " + inputList.get(i));
+                    System.out.println(". " + taskList.get(i).getStatus());
                 }
             }
             input = scanner.nextLine();
