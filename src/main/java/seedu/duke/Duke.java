@@ -50,7 +50,11 @@ public class Duke {
                     }
                 }
             }else if(!input.equals("list")){
-                addActivity(input);
+                try {
+                    addActivity(input);
+                } catch (UserInputException e) {
+                    System.out.println(e);
+                }
             }else{
                 System.out.println("Here are the tasks in your list:");
                 for(int i = 0; i < taskList.size(); i++){
@@ -63,21 +67,37 @@ public class Duke {
         System.out.println("Bye. Hope to see you again!");
     }
 
-    private static Boolean addActivity(String input) {
+    private static Boolean addActivity(String input) throws UserInputException {
         boolean added = false;
-        if(input.startsWith("todo ")) {
-            taskList.add(new Activities.ToDo(input.substring(5)));
+        if(input.startsWith("todo")) {
+            if(input.length() <= 5) {
+                throw new UserInputException("☹ OOPS!!! The description of a todo cannot be empty.");
+            }
+            input = input.substring(5);
+            taskList.add(new Activities.ToDo(input));
             added = true;
-        } else if (input.startsWith("deadline ")) {
+        } else if (input.startsWith("deadline")) {
+            if(input.length() <= 9) {
+                throw new UserInputException("☹ OOPS!!! The description of a deadline cannot be empty.");
+            }
             input = input.substring(9);
-            String name = input.split(" /by ")[0];
-            String time = input.split(" /by ")[1];
+            if(!input.contains(" /by ")) {
+                throw new UserInputException("☹ OOPS!!! A deadline must have a time specified.");
+            }
+            String name = input.split(" /by ", 2)[0];
+            String time = input.split(" /by ", 2)[1];
             taskList.add(new Activities.Deadline(name, time));
             added = true;
-        } else if (input.startsWith("event ")) {
+        } else if (input.startsWith("event")) {
+            if(input.length() <= 6) {
+                throw new UserInputException("☹ OOPS!!! The description of a event cannot be empty.");
+            }
             input = input.substring(6);
-            String name = input.split(" /at ")[0];
-            String time = input.split(" /at ")[1];
+            if(!input.contains(" /at ")) {
+                throw new UserInputException("☹ OOPS!!! A event must have a time specified.");
+            }
+            String name = input.split(" /at ", 2)[0];
+            String time = input.split(" /at ", 2)[1];
             taskList.add(new Activities.Event(name, time));
             added = true;
         }
@@ -86,8 +106,20 @@ public class Duke {
             System.out.println("  " + taskList.get(taskList.size() - 1).toString());
             System.out.println("Now you have " + Integer.toString(taskList.size()) + " task(s) in the list.");
         } else {
-            System.out.println("Invalid task type! Please check again. ");
+            throw new UserInputException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
         return added;
+    }
+
+    public static class UserInputException extends Exception {
+        private String msg;
+        public UserInputException(String msg) {
+            super();
+            this.msg = msg;
+        }
+
+        public String toString(){
+            return msg;
+        }
     }
 }
