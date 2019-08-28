@@ -2,8 +2,8 @@ package seedu.duke;
 
 public class Activities {
     public static class Task {
-        private String name;
-        private boolean done;
+        protected String name;
+        protected boolean done;
         public Task(String name) {
             this.name = name;
             this.done = false;
@@ -28,6 +28,10 @@ public class Activities {
         public String toString() {
             return this.getStatus();
         }
+
+        public String toFileString() {
+            return this.toString();
+        }
     }
 
     //------------ToDo-------------
@@ -39,6 +43,11 @@ public class Activities {
         @Override
         public String toString() {
             return "[T]" + this.getStatus();
+        }
+
+        @Override
+        public String toFileString() {
+            return (this.done ? "1" : "0") + " todo " + this.name;
         }
     }
 
@@ -55,6 +64,12 @@ public class Activities {
         public String toString() {
             return "[D]" + this.getStatus() + " (by: " + this.time + ")";
         }
+
+        @Override
+        public String toFileString() {
+            return (this.done ? "1" : "0") + " deadline " + this.name + " /by "
+                    + this.time;
+        }
     }
 
     //------------Event-------------
@@ -68,6 +83,12 @@ public class Activities {
         @Override
         public String toString() {
             return "[E]" + this.getStatus() + " (at: " + this.time + ")";
+        }
+
+        @Override
+        public String toFileString() {
+            return (this.done ? "1" : "0") + " event " + this.name + " /at "
+                    + this.time;
         }
     }
 }

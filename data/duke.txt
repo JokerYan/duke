@@ -1,0 +1,6 @@
+1 todo 12345
+0 deadline 2345 /by 12345
+0 event 2345 /at 12345
+1 todo asds
+1 deadline adjec /by sdimoe
+0 todo @

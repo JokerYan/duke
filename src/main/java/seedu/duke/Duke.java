@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class Duke {
 
     private static void list() {
         taskList = new ArrayList<>();
+        readTasks();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while(!input.equals("bye")){
@@ -51,7 +53,7 @@ public class Duke {
                 }
             }else if(!input.equals("list")){
                 try {
-                    addActivity(input);
+                    addActivity(input, true);
                 } catch (UserInputException e) {
                     System.out.println(e);
                 }
@@ -64,10 +66,11 @@ public class Duke {
             }
             input = scanner.nextLine();
         }
+        saveTasks();
         System.out.println("Bye. Hope to see you again!");
     }
 
-    private static Boolean addActivity(String input) throws UserInputException {
+    private static Boolean addActivity(String input, boolean log) throws UserInputException {
         boolean added = false;
         if(input.startsWith("todo")) {
             if(input.length() <= 5) {
@@ -102,13 +105,79 @@ public class Duke {
             added = true;
         }
         if(added){
-            System.out.println("Got it. I've added this task: ");
-            System.out.println("  " + taskList.get(taskList.size() - 1).toString());
-            System.out.println("Now you have " + Integer.toString(taskList.size()) + " task(s) in the list.");
+            if(log) {
+                System.out.println("Got it. I've added this task: ");
+                System.out.println("  " + taskList.get(taskList.size() - 1).toString());
+                System.out.println("Now you have " + Integer.toString(taskList.size()) + " task(s) in the list.");
+            }
         } else {
             throw new UserInputException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
         return added;
+    }
+
+    private static void readTasks() {
+        FileInputStream in;
+        File file = new File(".\\data\\duke.txt");
+        try {
+            in = new FileInputStream(file);
+            Scanner scanner = new Scanner(in);
+            ArrayList<Boolean> doneList = new ArrayList<>();
+            while(scanner.hasNextLine()) {
+                String input = scanner.nextLine();
+                if(input.length() <= 2) {
+                    throw new UserInputException("Invalid Save File!");
+                }
+                if(input.startsWith("1")) {
+                    doneList.add(true);
+                } else if(input.startsWith("0")){
+                    doneList.add(false);
+                } else {
+                    throw new UserInputException("Invalid Save File!");
+                }
+                input = input.split(" ", 2)[1];
+                try {
+//                    System.out.println(input);
+                    addActivity(input, false);
+                } catch (UserInputException e) {
+                    throw new UserInputException("Invalid Save File!");
+                }
+            }
+            for(int i = 0; i < taskList.size(); i++) {
+                if(doneList.get(i)) {
+                    taskList.get(i).markDone();
+                }
+            }
+            System.out.println("Save file successfully loaded...");
+            in.close();
+        } catch (FileNotFoundException e) {
+            return; //it is acceptable if there is no save file
+        } catch (IOException e) {
+            System.out.println("Read save file IO exception");
+        } catch (UserInputException e) {
+            System.out.println(e);
+            taskList = new ArrayList<>();
+        }
+    }
+
+    private static void saveTasks() {
+        FileOutputStream out;
+        try {
+            File file = new File(".\\data\\duke.txt");
+            file.createNewFile();
+            out = new FileOutputStream(file, false);
+            String content = "";
+            for(Activities.Task task : taskList){
+                content += task.toFileString() + "\n";
+            }
+            out.write(content.getBytes());
+            out.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Output file not found!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Write to output file IO exception!");
+        }
     }
 
     public static class UserInputException extends Exception {
