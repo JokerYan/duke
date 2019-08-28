@@ -1,9 +1,16 @@
 package seedu.duke;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Activities {
     public static class Task {
         protected String name;
         protected boolean done;
+        protected static SimpleDateFormat format =
+                new SimpleDateFormat("dd/MM/yyyy HHmm");
+
         public Task(String name) {
             this.name = name;
             this.done = false;
@@ -32,6 +39,11 @@ public class Activities {
         public String toFileString() {
             return this.toString();
         }
+
+        public static Date parseDate(String dateString) throws ParseException {
+            System.out.println(dateString);
+            return format.parse(dateString);
+        }
     }
 
     //------------ToDo-------------
@@ -53,42 +65,51 @@ public class Activities {
 
     //------------Deadline-------------
     public static class Deadline extends Task {
-        private String time;
+        private Date time;
 
-        public Deadline(String name, String time) {
+        public Deadline(String name, Date time) {
             super(name);
             this.time = time;
         }
 
         @Override
         public String toString() {
-            return "[D]" + this.getStatus() + " (by: " + this.time + ")";
+            return "[D]" + this.getStatus() + " (by: " + formatDate() + ")";
         }
 
         @Override
         public String toFileString() {
             return (this.done ? "1" : "0") + " deadline " + this.name + " /by "
-                    + this.time;
+                    + formatDate();
+        }
+
+        protected String formatDate() {
+            return format.format(this.time);
         }
     }
 
     //------------Event-------------
     public static class Event extends Task {
-        private String time;
-        public Event(String name, String time) {
+        private Date time;
+
+        public Event(String name, Date time) {
             super(name);
             this.time = time;
         }
 
         @Override
         public String toString() {
-            return "[E]" + this.getStatus() + " (at: " + this.time + ")";
+            return "[E]" + this.getStatus() + " (at: " + formatDate() + ")";
         }
 
         @Override
         public String toFileString() {
             return (this.done ? "1" : "0") + " event " + this.name + " /at "
-                    + this.time;
+                    + formatDate();
+        }
+
+        protected String formatDate() {
+            return format.format(this.time);
         }
     }
 }

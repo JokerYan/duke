@@ -1,6 +1,8 @@
 package seedu.duke;
 
 import java.io.*;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -88,9 +90,14 @@ public class Duke {
                 throw new UserInputException("☹ OOPS!!! A deadline must have a time specified.");
             }
             String name = input.split(" /by ", 2)[0];
-            String time = input.split(" /by ", 2)[1];
-            taskList.add(new Activities.Deadline(name, time));
-            added = true;
+            String timeString = input.split(" /by ", 2)[1];
+            try {
+                Date time = Activities.Task.parseDate(timeString);
+                taskList.add(new Activities.Deadline(name, time));
+                added = true;
+            } catch (ParseException e) {
+                throw new UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
+            }
         } else if (input.startsWith("event")) {
             if(input.length() <= 6) {
                 throw new UserInputException("☹ OOPS!!! The description of a event cannot be empty.");
@@ -100,9 +107,15 @@ public class Duke {
                 throw new UserInputException("☹ OOPS!!! A event must have a time specified.");
             }
             String name = input.split(" /at ", 2)[0];
-            String time = input.split(" /at ", 2)[1];
-            taskList.add(new Activities.Event(name, time));
-            added = true;
+            String timeString = input.split(" /at ", 2)[1];
+            Date time = null;
+            try {
+                time = Activities.Task.parseDate(timeString);
+                taskList.add(new Activities.Event(name, time));
+                added = true;
+            } catch (ParseException e) {
+                throw new UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
+            }
         }
         if(added){
             if(log) {
