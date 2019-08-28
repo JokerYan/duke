@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    private static ArrayList<Task> taskList;
+    private static ArrayList<Activities.Task> taskList;
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -16,7 +16,7 @@ public class Duke {
 //        Duke.echo();
         list();
     }
-
+    
     private static void echo() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
@@ -27,33 +27,8 @@ public class Duke {
         System.out.println("Bye. Hope to see you again!");
     }
 
-    public static class Task {
-        private String name;
-        private boolean done;
-        public Task(String name) {
-            this.name = name;
-            this.done = false;
-        }
-
-        public void markDone() {
-            this.done = true;
-        }
-
-        public boolean getDone() {
-            return this.done;
-        }
-
-        public String getStatus() {
-            if(this.done){
-                return "[\u2713] " + this.name;
-            }else{
-                return "[\u2718] " + this.name;
-            }
-        }
-    }
-
     private static void list() {
-        taskList = new ArrayList<Task>();
+        taskList = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while(!input.equals("bye")){
@@ -75,7 +50,7 @@ public class Duke {
                     }
                 }
             }else if(!input.equals("list")){
-                taskList.add(new Task(input));
+                taskList.add(new Activities.Task(input));
                 System.out.println("added: " + input);
             }else{
                 System.out.println("Here are the tasks in your list:");
