@@ -43,24 +43,51 @@ public class Duke {
                         }else{
                             taskList.get(index).markDone();
                             System.out.println("Nice! I've marked this task as done:");
-                            System.out.println(taskList.get(index).getStatus());
+                            System.out.println(taskList.get(index).toString());
                         }
                     } catch (NumberFormatException e){
                         System.out.println("Please enter task index");
                     }
                 }
             }else if(!input.equals("list")){
-                taskList.add(new Activities.Task(input));
-                System.out.println("added: " + input);
+                addActivity(input);
             }else{
                 System.out.println("Here are the tasks in your list:");
                 for(int i = 0; i < taskList.size(); i++){
                     System.out.print(i + 1);
-                    System.out.println(". " + taskList.get(i).getStatus());
+                    System.out.println(". " + taskList.get(i).toString());
                 }
             }
             input = scanner.nextLine();
         }
         System.out.println("Bye. Hope to see you again!");
+    }
+
+    private static Boolean addActivity(String input) {
+        boolean added = false;
+        if(input.startsWith("todo ")) {
+            taskList.add(new Activities.ToDo(input.substring(5)));
+            added = true;
+        } else if (input.startsWith("deadline ")) {
+            input = input.substring(9);
+            String name = input.split(" /by ")[0];
+            String time = input.split(" /by ")[1];
+            taskList.add(new Activities.Deadline(name, time));
+            added = true;
+        } else if (input.startsWith("event ")) {
+            input = input.substring(6);
+            String name = input.split(" /at ")[0];
+            String time = input.split(" /at ")[1];
+            taskList.add(new Activities.Event(name, time));
+            added = true;
+        }
+        if(added){
+            System.out.println("Got it. I've added this task: ");
+            System.out.println("  " + taskList.get(taskList.size() - 1).toString());
+            System.out.println("Now you have " + Integer.toString(taskList.size()) + " task(s) in the list.");
+        } else {
+            System.out.println("Invalid task type! Please check again. ");
+        }
+        return added;
     }
 }
