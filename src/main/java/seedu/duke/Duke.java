@@ -7,7 +7,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    private static ArrayList<Activities.Task> taskList;
+    private static TaskList taskList;
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -16,22 +17,11 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("What can I do for you?");
-//        Duke.echo();
-        list();
-    }
-    
-    private static void echo() {
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        while(!input.equals("bye")){
-            System.out.println(input);
-            input = scanner.nextLine();
-        }
-        System.out.println("Bye. Hope to see you again!");
+        run();
     }
 
-    private static void list() {
-        taskList = new ArrayList<>();
+    private static void run() {
+        taskList = new TaskList();
         readTasks();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
@@ -42,15 +32,7 @@ public class Duke {
                 } else {
                     try {
                         int index = Integer.parseInt(input.substring(5)) - 1;
-                        if(index < 0 || index >= taskList.size()){
-                            System.out.println("Invalid index");
-                        }else{
-                            taskList.get(index).markDone();
-                            System.out.println("Nice! I've marked this task as done:");
-                            System.out.println(taskList.get(index).toString());
-                            System.out.println("Now you have " + Integer.toString(taskList.size())
-                                    + " tasks in the list.");
-                        }
+                        System.out.println(taskList.markDone(index));
                     } catch (NumberFormatException e){
                         System.out.println("Please enter task index");
                     }
@@ -61,16 +43,7 @@ public class Duke {
                 } else {
                     try {
                         int index = Integer.parseInt(input.substring(7)) - 1;
-                        if(index < 0 || index >= taskList.size()){
-                            System.out.println("Invalid index");
-                        }else{
-                            String taskInfo = taskList.get(index).toString();
-                            taskList.remove(index);
-                            System.out.println("Noted. I've removed this task: ");
-                            System.out.println(taskInfo);
-                            System.out.println("Now you have " + Integer.toString(taskList.size())
-                                    + " tasks in the list.");
-                        }
+                        System.out.println(taskList.delete(index));
                     } catch (NumberFormatException e){
                         System.out.println("Please enter task index");
                     }
@@ -80,21 +53,7 @@ public class Duke {
                     System.out.println("Please enter keyword for searching after \'find\'");
                 } else {
                     String keyword = input.split(" ", 2)[1];
-                    ArrayList<Activities.Task> searchResult = new ArrayList<>();
-                    for(Activities.Task task : taskList) {
-                        if(task.matchKeyword(keyword)) {
-                            searchResult.add(task);
-                        }
-                    }
-
-                    if(searchResult.size() > 0) {
-                        System.out.println("Here are the matching tasks in your list:");
-                        for(int i = 0; i < searchResult.size(); i++) {
-                            System.out.println(Integer.toString(i + 1) + ". " + searchResult.get(i));
-                        }
-                    } else {
-                        System.out.println("There is no matching task in your list.");
-                    }
+                    System.out.println(taskList.findKeyword(keyword));
                 }
             } else if(!input.equals("list")) {
                 try {
@@ -103,11 +62,7 @@ public class Duke {
                     System.out.println(e);
                 }
             } else {
-                System.out.println("Here are the tasks in your list:");
-                for(int i = 0; i < taskList.size(); i++){
-                    System.out.print(i + 1);
-                    System.out.println(". " + taskList.get(i).toString());
-                }
+                System.out.println(taskList);
             }
             input = scanner.nextLine();
         }
@@ -217,7 +172,7 @@ public class Duke {
             System.out.println("Read save file IO exception");
         } catch (UserInputException e) {
             System.out.println(e);
-            taskList = new ArrayList<>();
+            taskList = new TaskList();
         }
     }
 
