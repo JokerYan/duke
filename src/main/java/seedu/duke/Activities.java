@@ -41,7 +41,7 @@ public class Activities {
         }
 
         public static Date parseDate(String dateString) throws ParseException {
-            System.out.println(dateString);
+//            System.out.println(dateString);
             return format.parse(dateString);
         }
     }
