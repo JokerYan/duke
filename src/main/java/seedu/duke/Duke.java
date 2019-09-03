@@ -117,19 +117,19 @@ public class Duke {
 
     private static Boolean addActivity(String input, boolean log) throws UserInputException {
         boolean added = false;
-        if(input.startsWith("todo")) {
-            if(input.length() <= 5) {
+        if (input.startsWith("todo")) {
+            if (input.length() <= 5) {
                 throw new UserInputException("☹ OOPS!!! The description of a todo cannot be empty.");
             }
             input = input.substring(5);
             taskList.add(new Activities.ToDo(input));
             added = true;
         } else if (input.startsWith("deadline")) {
-            if(input.length() <= 9) {
+            if (input.length() <= 9) {
                 throw new UserInputException("☹ OOPS!!! The description of a deadline cannot be empty.");
             }
             input = input.substring(9);
-            if(!input.contains(" /by ")) {
+            if (!input.contains(" /by ")) {
                 throw new UserInputException("☹ OOPS!!! A deadline must have a time specified.");
             }
             String name = input.split(" /by ", 2)[0];
@@ -142,11 +142,11 @@ public class Duke {
                 throw new UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
             }
         } else if (input.startsWith("event")) {
-            if(input.length() <= 6) {
+            if (input.length() <= 6) {
                 throw new UserInputException("☹ OOPS!!! The description of a event cannot be empty.");
             }
             input = input.substring(6);
-            if(!input.contains(" /at ")) {
+            if (!input.contains(" /at ")) {
                 throw new UserInputException("☹ OOPS!!! A event must have a time specified.");
             }
             String name = input.split(" /at ", 2)[0];
@@ -160,8 +160,8 @@ public class Duke {
                 throw new UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
             }
         }
-        if(added){
-            if(log) {
+        if (added) {
+            if (log) {
                 System.out.println("Got it. I've added this task: ");
                 System.out.println("  " + taskList.get(taskList.size() - 1).toString());
                 System.out.println("Now you have " + Integer.toString(taskList.size()) + " task(s) in the list.");
@@ -173,8 +173,13 @@ public class Duke {
     }
 
     private static void readTasks() {
+        String subDir = "";
+        String workingDir = System.getProperty("user.dir");
+        if(workingDir.endsWith("text-ui-test")) {
+            subDir = ".";
+        }
         FileInputStream in;
-        File file = new File(".\\data\\duke.txt");
+        File file = new File("." + subDir + "\\data\\duke.txt");
         try {
             in = new FileInputStream(file);
             Scanner scanner = new Scanner(in);
@@ -217,9 +222,14 @@ public class Duke {
     }
 
     private static void saveTasks() {
+        String subDir = "";
+        String workingDir = System.getProperty("user.dir");
+        if(workingDir.endsWith("text-ui-test")) {
+            subDir = ".";
+        }
         FileOutputStream out;
         try {
-            File file = new File(".\\data\\duke.txt");
+            File file = new File("." + subDir +"\\data\\duke.txt");
             file.createNewFile();
             out = new FileOutputStream(file, false);
             String content = "";
