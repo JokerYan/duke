@@ -39,7 +39,7 @@ public class Duke {
             if(input.startsWith("done")){
                 if(input.length() <= 5) {
                     System.out.println("Please enter index of task after \'done\'");
-                }else{
+                } else {
                     try {
                         int index = Integer.parseInt(input.substring(5)) - 1;
                         if(index < 0 || index >= taskList.size()){
@@ -75,13 +75,34 @@ public class Duke {
                         System.out.println("Please enter task index");
                     }
                 }
-            }else if(!input.equals("list")){
+            } else if(input.startsWith("find ")) {
+                if(input.length() <= 5) {
+                    System.out.println("Please enter keyword for searching after \'find\'");
+                } else {
+                    String keyword = input.split(" ", 2)[1];
+                    ArrayList<Activities.Task> searchResult = new ArrayList<>();
+                    for(Activities.Task task : taskList) {
+                        if(task.matchKeyword(keyword)) {
+                            searchResult.add(task);
+                        }
+                    }
+
+                    if(searchResult.size() > 0) {
+                        System.out.println("Here are the matching tasks in your list:");
+                        for(int i = 0; i < searchResult.size(); i++) {
+                            System.out.println(Integer.toString(i + 1) + ". " + searchResult.get(i));
+                        }
+                    } else {
+                        System.out.println("There is no matching task in your list.");
+                    }
+                }
+            } else if(!input.equals("list")) {
                 try {
                     addActivity(input, true);
                 } catch (UserInputException e) {
                     System.out.println(e);
                 }
-            }else{
+            } else {
                 System.out.println("Here are the tasks in your list:");
                 for(int i = 0; i < taskList.size(); i++){
                     System.out.print(i + 1);

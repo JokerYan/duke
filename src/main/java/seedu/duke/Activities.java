@@ -44,6 +44,10 @@ public class Activities {
 //            System.out.println(dateString);
             return format.parse(dateString);
         }
+
+        public boolean matchKeyword(String keyword) {
+            return this.toString().contains(keyword);
+        }
     }
 
     //------------ToDo-------------
