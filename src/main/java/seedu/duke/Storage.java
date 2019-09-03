@@ -58,7 +58,7 @@ public class Storage {
                 input = input.split(" ", 2)[1];
                 try {
 //                    System.out.println(input);
-                    taskList.addTask(input, false);
+                    taskList.addTask(input);
                 } catch (Duke.UserInputException e) {
                     throw new Duke.UserInputException("Invalid Save File!");
                 }

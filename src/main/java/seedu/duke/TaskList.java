@@ -60,7 +60,7 @@ public class TaskList extends ArrayList<Task> {
         return msg;
     }
 
-    public Boolean addTask(String input, boolean log) throws Duke.UserInputException {
+    public String addTask(String input) throws Duke.UserInputException {
         boolean added = false;
         if (input.startsWith("todo")) {
             if (input.length() <= 5) {
@@ -106,14 +106,12 @@ public class TaskList extends ArrayList<Task> {
             }
         }
         if (added) {
-            if (log) {
-                System.out.println("Got it. I've added this task: ");
-                System.out.println("  " + this.get(this.size() - 1).toString());
-                System.out.println("Now you have " + Integer.toString(this.size()) + " task(s) in the list.");
-            }
+            String msg = "Got it. I've added this task: \n";
+            msg += "  " + this.get(this.size() - 1).toString() + "\n";
+            msg += "Now you have " + Integer.toString(this.size()) + " task(s) in the list. \n";
+            return msg;
         } else {
             throw new Duke.UserInputException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
-        return added;
     }
 }

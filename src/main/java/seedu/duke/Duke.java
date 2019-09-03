@@ -56,7 +56,7 @@ public class Duke {
                 }
             } else if (!input.equals("list")) {
                 try {
-                    taskList.addTask(input, true);
+                    System.out.println(taskList.addTask(input));
                 } catch (UserInputException e) {
                     System.out.println(e);
                 }
@@ -68,8 +68,6 @@ public class Duke {
         Storage.saveTasks(taskList);
         System.out.println("Bye. Hope to see you again!");
     }
-
-
 
     public static class UserInputException extends Exception {
         private String msg;
