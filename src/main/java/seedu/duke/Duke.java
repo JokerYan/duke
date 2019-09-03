@@ -56,20 +56,24 @@ public class Duke {
                     }
                 }
             }else if(input.startsWith("delete")){
-                try {
-                    int index = Integer.parseInt(input.substring(7)) - 1;
-                    if(index < 0 || index >= taskList.size()){
-                        System.out.println("Invalid index");
-                    }else{
-                        String taskInfo = taskList.get(index).toString();
-                        taskList.remove(index);
-                        System.out.println("Noted. I've removed this task: ");
-                        System.out.println(taskInfo);
-                        System.out.println("Now you have " + Integer.toString(taskList.size())
-                                + " tasks in the list.");
+                if(input.length() <= 7) {
+                    System.out.println("Please enter index of task after \'delete\'");
+                } else {
+                    try {
+                        int index = Integer.parseInt(input.substring(7)) - 1;
+                        if(index < 0 || index >= taskList.size()){
+                            System.out.println("Invalid index");
+                        }else{
+                            String taskInfo = taskList.get(index).toString();
+                            taskList.remove(index);
+                            System.out.println("Noted. I've removed this task: ");
+                            System.out.println(taskInfo);
+                            System.out.println("Now you have " + Integer.toString(taskList.size())
+                                    + " tasks in the list.");
+                        }
+                    } catch (NumberFormatException e){
+                        System.out.println("Please enter task index");
                     }
-                } catch (NumberFormatException e){
-                    System.out.println("Please enter task index");
                 }
             }else if(!input.equals("list")){
                 try {
