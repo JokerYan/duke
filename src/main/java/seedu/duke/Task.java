@@ -4,50 +4,48 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Activities {
-    public static class Task {
-        protected String name;
-        protected boolean done;
-        protected static SimpleDateFormat format =
-                new SimpleDateFormat("dd/MM/yyyy HHmm");
+public class Task {
+    protected String name;
+    protected boolean done;
+    protected static SimpleDateFormat format =
+            new SimpleDateFormat("dd/MM/yyyy HHmm");
 
-        public Task(String name) {
-            this.name = name;
-            this.done = false;
+    public Task(String name) {
+        this.name = name;
+        this.done = false;
+    }
+
+    public void markDone() {
+        this.done = true;
+    }
+
+    public boolean getDone() {
+        return this.done;
+    }
+
+    protected String getStatus() {
+        if(this.done){
+            return "[\u2713] " + this.name;
+        }else{
+            return "[\u2718] " + this.name;
         }
+    }
 
-        public void markDone() {
-            this.done = true;
-        }
+    public String toString() {
+        return this.getStatus();
+    }
 
-        public boolean getDone() {
-            return this.done;
-        }
+    public String toFileString() {
+        return this.toString();
+    }
 
-        protected String getStatus() {
-            if(this.done){
-                return "[\u2713] " + this.name;
-            }else{
-                return "[\u2718] " + this.name;
-            }
-        }
-
-        public String toString() {
-            return this.getStatus();
-        }
-
-        public String toFileString() {
-            return this.toString();
-        }
-
-        public static Date parseDate(String dateString) throws ParseException {
+    public static Date parseDate(String dateString) throws ParseException {
 //            System.out.println(dateString);
-            return format.parse(dateString);
-        }
+        return format.parse(dateString);
+    }
 
-        public boolean matchKeyword(String keyword) {
-            return this.toString().contains(keyword);
-        }
+    public boolean matchKeyword(String keyword) {
+        return this.toString().contains(keyword);
     }
 
     //------------ToDo-------------

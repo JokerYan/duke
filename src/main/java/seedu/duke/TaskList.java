@@ -2,7 +2,7 @@ package seedu.duke;
 
 import java.util.ArrayList;
 
-public class TaskList extends ArrayList<Activities.Task> {
+public class TaskList extends ArrayList<Task> {
     @Override
     public String toString() {
         if(this.size() == 0) {
@@ -17,8 +17,8 @@ public class TaskList extends ArrayList<Activities.Task> {
     }
 
     public String findKeyword(String keyword) {
-        ArrayList<Activities.Task> searchResult = new ArrayList<>();
-        for(Activities.Task task : this) {
+        ArrayList<Task> searchResult = new ArrayList<>();
+        for(Task task : this) {
             if(task.matchKeyword(keyword)) {
                 searchResult.add(task);
             }
@@ -51,7 +51,7 @@ public class TaskList extends ArrayList<Activities.Task> {
         if(index < 0 || index >= this.size()){
             return "Invalid index";
         }
-        Activities.Task deleted = this.remove(index);
+        Task deleted = this.remove(index);
         String msg = "Noted. I've removed this task: \n";
         msg += deleted + "\n";
         msg += "Now you have " + this.size() + " tasks in the list.\n";

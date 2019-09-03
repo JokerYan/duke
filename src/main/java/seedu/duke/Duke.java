@@ -77,7 +77,7 @@ public class Duke {
                 throw new UserInputException("☹ OOPS!!! The description of a todo cannot be empty.");
             }
             input = input.substring(5);
-            taskList.add(new Activities.ToDo(input));
+            taskList.add(new Task.ToDo(input));
             added = true;
         } else if (input.startsWith("deadline")) {
             if (input.length() <= 9) {
@@ -90,8 +90,8 @@ public class Duke {
             String name = input.split(" /by ", 2)[0];
             String timeString = input.split(" /by ", 2)[1];
             try {
-                Date time = Activities.Task.parseDate(timeString);
-                taskList.add(new Activities.Deadline(name, time));
+                Date time = Task.parseDate(timeString);
+                taskList.add(new Task.Deadline(name, time));
                 added = true;
             } catch (ParseException e) {
                 throw new UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
@@ -108,8 +108,8 @@ public class Duke {
             String timeString = input.split(" /at ", 2)[1];
             Date time = null;
             try {
-                time = Activities.Task.parseDate(timeString);
-                taskList.add(new Activities.Event(name, time));
+                time = Task.parseDate(timeString);
+                taskList.add(new Task.Event(name, time));
                 added = true;
             } catch (ParseException e) {
                 throw new UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
@@ -188,7 +188,7 @@ public class Duke {
             file.createNewFile();
             out = new FileOutputStream(file, false);
             String content = "";
-            for(Activities.Task task : taskList){
+            for(Task task : taskList){
                 content += task.toFileString() + "\n";
             }
             out.write(content.getBytes());
