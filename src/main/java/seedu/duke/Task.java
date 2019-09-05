@@ -6,29 +6,38 @@ import java.util.Date;
 
 public class Task {
     protected String name;
-    protected boolean done;
+    protected boolean isDone;
+    protected TaskType taskType;
     protected static SimpleDateFormat format =
             new SimpleDateFormat("dd/MM/yyyy HHmm");
 
+    public enum TaskType {
+        ToDo, Deadline, Event
+    }
+
     public Task(String name) {
         this.name = name;
-        this.done = false;
+        this.isDone = false;
     }
 
     public void markDone() {
-        this.done = true;
+        this.isDone = true;
     }
 
     public boolean getDone() {
-        return this.done;
+        return this.isDone;
     }
 
     protected String getStatus() {
-        if(this.done){
+        if(this.isDone){
             return "[\u2713] " + this.name;
         }else{
             return "[\u2718] " + this.name;
         }
+    }
+
+    public TaskType getTaskType() {
+        return this.taskType;
     }
 
     public String toString() {
@@ -52,6 +61,7 @@ public class Task {
     public static class ToDo extends Task {
         public ToDo(String name) {
             super(name);
+            this.taskType = TaskType.ToDo;
         }
 
         @Override
@@ -61,7 +71,7 @@ public class Task {
 
         @Override
         public String toFileString() {
-            return (this.done ? "1" : "0") + " todo " + this.name;
+            return (this.isDone ? "1" : "0") + " todo " + this.name;
         }
     }
 
@@ -72,6 +82,7 @@ public class Task {
         public Deadline(String name, Date time) {
             super(name);
             this.time = time;
+            this.taskType = TaskType.Deadline;
         }
 
         @Override
@@ -81,7 +92,7 @@ public class Task {
 
         @Override
         public String toFileString() {
-            return (this.done ? "1" : "0") + " deadline " + this.name + " /by "
+            return (this.isDone ? "1" : "0") + " deadline " + this.name + " /by "
                     + formatDate();
         }
 
@@ -97,6 +108,7 @@ public class Task {
         public Event(String name, Date time) {
             super(name);
             this.time = time;
+            this.taskType = TaskType.Event;
         }
 
         @Override
@@ -106,7 +118,7 @@ public class Task {
 
         @Override
         public String toFileString() {
-            return (this.done ? "1" : "0") + " event " + this.name + " /at "
+            return (this.isDone ? "1" : "0") + " event " + this.name + " /at "
                     + formatDate();
         }
 
