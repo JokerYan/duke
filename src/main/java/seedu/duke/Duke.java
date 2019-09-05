@@ -1,10 +1,6 @@
 package seedu.duke;
 
-import java.io.*;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Duke {
     private static TaskList taskList;

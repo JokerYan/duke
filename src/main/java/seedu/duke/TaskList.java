@@ -1,8 +1,6 @@
 package seedu.duke;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TaskList extends ArrayList<Task> {
     @Override
