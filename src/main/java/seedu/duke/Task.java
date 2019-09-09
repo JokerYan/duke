@@ -29,9 +29,9 @@ public class Task {
     }
 
     protected String getStatus() {
-        if(this.isDone){
+        if (this.isDone) {
             return "[\u2713] " + this.name;
-        }else{
+        } else {
             return "[\u2718] " + this.name;
         }
     }
