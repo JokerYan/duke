@@ -1,5 +1,8 @@
 package seedu.duke;
 
+import seedu.duke.command.Command;
+import seedu.duke.task.Task;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;

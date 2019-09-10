@@ -1,5 +1,8 @@
 package seedu.duke;
 
+import seedu.duke.command.Command;
+import seedu.duke.command.ExitCommand;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -24,7 +27,7 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         Command command = Parser.parseCommand(input);
-        while (!(command instanceof Command.ExitCommand)) {
+        while (!(command instanceof ExitCommand)) {
             command.execute();
             input = scanner.nextLine();
             command = Parser.parseCommand(input);

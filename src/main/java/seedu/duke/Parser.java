@@ -1,5 +1,8 @@
 package seedu.duke;
 
+import seedu.duke.command.*;
+import seedu.duke.task.Task;
+
 import java.text.ParseException;
 import java.util.Date;
 
@@ -9,17 +12,17 @@ public class Parser {
         TaskList taskList = Duke.getTaskList();
 
         if (input.equals("bye")) {
-            return new Command.ExitCommand();
+            return new ExitCommand();
         } else if (input.equals("list")) {
-            return new Command.ListCommand(taskList);
+            return new ListCommand(taskList);
         } else if (input.startsWith("done ")) {
             if (input.length() <= 5) {
                 ui.showError("Please enter index of task after \'done\'");
-                return new Command.InvalidCommand();
+                return new InvalidCommand();
             } else {
                 try {
                     int index = parseIndex(input);
-                    return new Command.DoneCommand(index);
+                    return new DoneCommand(index);
                 } catch (NumberFormatException e) {
                     ui.showError(e.toString());
                 } catch (UserInputException e) {
@@ -29,11 +32,11 @@ public class Parser {
         } else if (input.startsWith("delete")) {
             if (input.length() <= 7) {
                 ui.showError("Please enter index of task after \'delete\'");
-                return new Command.InvalidCommand();
+                return new InvalidCommand();
             } else {
                 try {
                     int index = parseIndex(input);
-                    return new Command.DeleteCommand(taskList, index);
+                    return new DeleteCommand(taskList, index);
                 } catch (NumberFormatException e) {
                     ui.showError(e.toString());
                 } catch (UserInputException e) {
@@ -45,7 +48,7 @@ public class Parser {
                 ui.showError("Please enter keyword for searching after \'find\'");
             } else {
                 String keyword = input.split(" ", 2)[1];
-                return new Command.FindCommand(taskList, keyword);
+                return new FindCommand(taskList, keyword);
             }
         } else {
             try {
@@ -54,7 +57,7 @@ public class Parser {
                 ui.showError(e.toString());
             }
         }
-        return new Command.InvalidCommand();
+        return new InvalidCommand();
     }
 
     private static int parseIndex(String input) throws NumberFormatException, UserInputException {
@@ -111,7 +114,7 @@ public class Parser {
         } else {
             throw new Parser.UserInputException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
-        return new Command.AddCommand(taskList, taskType, name, time);
+        return new AddCommand(taskList, taskType, name, time);
     }
 
     public static class UserInputException extends Exception {
