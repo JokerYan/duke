@@ -6,7 +6,20 @@ import seedu.duke.task.Task;
 import java.text.ParseException;
 import java.util.Date;
 
+/**
+ * A class that contains helper functions used to process user inputs.
+ * It also contains UserInputException that is used across the project
+ * to handle the unexpected user input.
+ */
 public class Parser {
+    /**
+     * Parse the user/file input as command. It returns a command that
+     * is not yet executed. It also needs to get a UI from Duke to display
+     * the messages.
+     *
+     * @param input the user/file input that is to be parsed to a command
+     * @return the parse result, which is a command ready to be executed
+     */
     public static Command parseCommand(String input) {
         UI ui = Duke.getUI();
         TaskList taskList = Duke.getTaskList();
@@ -68,6 +81,18 @@ public class Parser {
         return Integer.parseInt(splited[1]) - 1;
     }
 
+    /**
+     * Parse the specific part of a user/file input that is relevant to a
+     * task. A successful parsing always returns an AddCommand, as it is
+     * assumed that an input starting with a task name is an add command.
+     *
+     * @param taskList target task list to which the new task is to be added
+     *                 to
+     * @param input user/file input ready to be parsed
+     * @return an AddCommand of the task parsed from the input
+     * @throws UserInputException an exception when the parsing is failed,
+     * probably due to the wrong format of input
+     */
     public static Command parseTask(TaskList taskList, String input) throws UserInputException {
         Task.TaskType taskType;
         String name;
@@ -117,14 +142,30 @@ public class Parser {
         return new AddCommand(taskList, taskType, name, time);
     }
 
+    /**
+     * An type of exception dedicated to handling the unexpected user/file
+     * input. The message contains more specific information.
+     */
     public static class UserInputException extends Exception {
         private String msg;
 
+        /**
+         * Instantiate the exception with a message, which is ready to be
+         * displayed by the UI.
+         *
+         * @param msg the message that is ready to be displayed by UI.
+         */
         public UserInputException(String msg) {
             super();
             this.msg = msg;
         }
 
+        /**
+         * Convert the exception ot string by returning its message, so
+         * that it can be displayed by the UI.
+         *
+         * @return the message of the exception
+         */
         public String toString() {
             return msg;
         }

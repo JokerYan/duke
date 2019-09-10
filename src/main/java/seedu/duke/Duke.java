@@ -5,10 +5,18 @@ import seedu.duke.command.ExitCommand;
 
 import java.util.Scanner;
 
+/**
+ * The main class of the program, which provides the entry point.
+ */
 public class Duke {
     private static TaskList taskList;
     private static UI ui;
 
+    /**
+     * The main function of the program, which is the entry point.
+     *
+     * @param args the arguments from the console when running
+     */
     public static void main(String[] args) {
         ui = new UI();
         run();

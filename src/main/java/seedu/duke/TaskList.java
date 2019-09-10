@@ -4,7 +4,16 @@ import seedu.duke.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * TaskList class is the special type of ArrayList that contains Task and
+ * has some special functions used to manipulate the tasks in this list
+ */
 public class TaskList extends ArrayList<Task> {
+    /**
+     * Convert the task list to a string of the pre-determined format that
+     * is ready to be displayed by the UI.
+     * @return
+     */
     @Override
     public String toString() {
         if (this.size() == 0) {
@@ -18,6 +27,15 @@ public class TaskList extends ArrayList<Task> {
         return msg;
     }
 
+    /**
+     * Search through all the tasks in the list to look for the keyword
+     * specified. The result will be the string containing all the task
+     * string that is ready to be displayed.
+     *
+     * @param keyword the target keyword for searching
+     * @return a string containing all the tasks found and is ready to
+     * be displayed by UI
+     */
     public String findKeyword(String keyword) {
         ArrayList<Task> searchResult = new ArrayList<>();
         for (Task task : this) {
@@ -37,6 +55,14 @@ public class TaskList extends ArrayList<Task> {
         return msg;
     }
 
+    /**
+     * Mark the task at the specified index in the task list as done.
+     *
+     * @param index the target index of which the task is to be marked as done
+     * @return a message that is ready to be displayed by UI
+     * @throws Parser.UserInputException an exception thrown when index parsing
+     * failed or out of range
+     */
     public String markDone(int index) throws Parser.UserInputException {
         if (index < 0 || index >= this.size()) {
             throw new Parser.UserInputException("Invalid Index");
@@ -49,6 +75,14 @@ public class TaskList extends ArrayList<Task> {
         return msg;
     }
 
+    /**
+     * Delete the task at the specified index in the task list
+     *
+     * @param index the target index of which the task is to be deleted
+     * @return a message that is ready to be displayed by UI
+     * @throws Parser.UserInputException an exception thrown when index parsing
+     * failed or out of range
+     */
     public String delete(int index) throws Parser.UserInputException {
         if (index < 0 || index >= this.size()) {
             throw new Parser.UserInputException("Invalid index");

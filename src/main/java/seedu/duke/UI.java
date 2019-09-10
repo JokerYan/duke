@@ -1,16 +1,19 @@
 package seedu.duke;
 
 public class UI {
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_WHITE = "\u001B[37m";
 
+    /**
+     * Instantiate the UI component, which also display the welcoming message.
+     */
     public UI() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -22,16 +25,31 @@ public class UI {
         showMessage(logo);
     }
 
+    /**
+     * Show a simple message without any format.
+     * @param msg the message that is to be shown
+     */
     public void showMessage(String msg) {
         System.out.println(msg);
     }
 
+    /**
+     * Show a message in the format of a response, which is in between two
+     * lines.
+     *
+     * @param msg the message that is to be shown
+     */
     public void showResponse(String msg) {
         System.out.println("------------------------------");
         System.out.println(msg);
         System.out.println("------------------------------\n");
     }
 
+    /**
+     * Show an error message in the red color.
+     *
+     * @param msg the error message that is to be shown
+     */
     public void showError(String msg) {
         System.out.println(ANSI_RED + msg + ANSI_RESET);
     }

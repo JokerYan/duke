@@ -7,7 +7,19 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Storage class contains the helper functions that is used to interact with
+ * the file storing the task information.
+ */
 public class Storage {
+    /**
+     * This function clear the content of the file and write all the
+     * information of the tasks in the task list to that file. This file
+     * follows similar structure as the user input and can be used to
+     * re-construct the task list later.
+     *
+     * @param taskList the list of task that is to be written to the file
+     */
     public static void saveTasks(TaskList taskList) {
         String subDir = "";
         String workingDir = System.getProperty("user.dir");
@@ -33,6 +45,14 @@ public class Storage {
         }
     }
 
+    /**
+     * This function read the file that is previously saved to re-construct
+     * and return the task list from the file information. Note: if any
+     * error occurs during the reading or parsing of the file, an empty
+     * task list will always be returned for the integrity of data.
+     *
+     * @return task list re-constructed from the save file
+     */
     public static TaskList readTasks() {
         TaskList taskList = new TaskList();
         String subDir = "";
@@ -85,14 +105,29 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * Exception that belongs to the process of storing and reading of file
+     */
     public static class StorageException extends Exception {
         private String msg;
 
+        /**
+         * Instantiation of storage exception with a message, which can be
+         * later displayed by the UI.
+         *
+         * @param msg the message of the exception that can be displayed by
+         *            UI
+         */
         public StorageException(String msg) {
             super();
             this.msg = msg;
         }
 
+        /**
+         * Convert the exception to string by returning its message.
+         *
+         * @return message of the exception.
+         */
         public String toString() {
             return msg;
         }
