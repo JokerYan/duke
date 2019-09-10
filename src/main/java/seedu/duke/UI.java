@@ -27,6 +27,7 @@ public class UI {
 
     /**
      * Show a simple message without any format.
+     *
      * @param msg the message that is to be shown
      */
     public void showMessage(String msg) {
@@ -34,8 +35,7 @@ public class UI {
     }
 
     /**
-     * Show a message in the format of a response, which is in between two
-     * lines.
+     * Show a message in the format of a response, which is in between two lines.
      *
      * @param msg the message that is to be shown
      */

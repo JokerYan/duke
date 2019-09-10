@@ -1,8 +1,7 @@
 package seedu.duke.command;
 
 /**
- * Exit Command is a special kind of command called when the user ends the
- * interaction.
+ * Exit Command is a special kind of command called when the user ends the interaction.
  */
 public class ExitCommand extends Command {
     /**

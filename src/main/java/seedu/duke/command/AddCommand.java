@@ -10,8 +10,7 @@ import seedu.duke.task.ToDo;
 import java.util.Date;
 
 /**
- * Add Command is a specific kind of command used to add task to the
- * task list.
+ * Add Command is a specific kind of command used to add task to the task list.
  */
 public class AddCommand extends Command {
     private TaskList taskList;
@@ -20,16 +19,13 @@ public class AddCommand extends Command {
     private Date time;
 
     /**
-     * Instantiation of add command with all the necessary variables.
-     * it needs to execute.
+     * Instantiation of add command with all the necessary variables. it needs to execute.
      *
      * @param taskList the task list where the task is added to.
      * @param taskType the type of task that is to be added.
-     * @param name     he name of the task, which is needed to instantiate
-     *                 the task.
-     * @param time     the time of the task, which is needed to instantiate
-     *                 the task. ToDo tasks does not have time attribute, so
-     *                 any Date can be passed in and will be ignored.
+     * @param name     he name of the task, which is needed to instantiate the task.
+     * @param time     the time of the task, which is needed to instantiate the task. ToDo tasks does not have
+     *                 time attribute, so any Date can be passed in and will be ignored.
      */
     public AddCommand(TaskList taskList, Task.TaskType taskType, String name, Date time) {
         this.taskList = taskList;
@@ -39,27 +35,25 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Execute the add command by instantiating the task first and then
-     * add the task to task list.
+     * Execute the add command by instantiating the task first and then add the task to task list.
      *
-     * @return a flag whether the task is successfully added. Returns false
-     * if the taskType is not recognised.
+     * @return a flag whether the task is successfully added. Returns false if the taskType is not recognised.
      */
     @Override
     public boolean execute() {
         Task task;
         switch (taskType) {
-            case ToDo:
-                task = new ToDo(name);
-                break;
-            case Deadline:
-                task = new Deadline(name, time);
-                break;
-            case Event:
-                task = new Event(name, time);
-                break;
-            default:
-                return false;
+        case ToDo:
+            task = new ToDo(name);
+            break;
+        case Deadline:
+            task = new Deadline(name, time);
+            break;
+        case Event:
+            task = new Event(name, time);
+            break;
+        default:
+            return false;
         }
         taskList.add(task);
         if (!silent) {

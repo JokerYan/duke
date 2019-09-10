@@ -5,8 +5,7 @@ import seedu.duke.Parser;
 import seedu.duke.TaskList;
 
 /**
- * Delete Command that is used delete a task from the task list
- * with its index.
+ * Delete Command that is used delete a task from the task list with its index.
  */
 public class DeleteCommand extends Command {
     private TaskList taskList;
@@ -24,20 +23,23 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Execute the delete command by calling the delete function of task
-     * list.
+     * Execute the delete command by calling the delete function of task list.
      *
-     * @return a flag whether deletion is done successfully. Returns false
-     * if the delete function of task list throws an exception.
+     * @return a flag whether deletion is done successfully. Returns false if the delete function of task list
+     *      throws an exception.
      */
     @Override
     public boolean execute() {
         try {
             String msg = taskList.delete(index);
-            if (!silent) Duke.getUI().showResponse(msg);
+            if (!silent) {
+                Duke.getUI().showResponse(msg);
+            }
             return true;
         } catch (Parser.UserInputException e) {
-            if (!silent) Duke.getUI().showError(e.toString());
+            if (!silent) {
+                Duke.getUI().showError(e.toString());
+            }
             return false;
         }
     }

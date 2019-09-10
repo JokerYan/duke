@@ -1,8 +1,7 @@
 package seedu.duke.command;
 
 /**
- * Invalid Command is a specific kind of command indicating the input is not
- * recognised as any known command.
+ * Invalid Command is a specific kind of command indicating the input is not recognised as any known command.
  */
 public class InvalidCommand extends Command {
 
@@ -13,7 +12,9 @@ public class InvalidCommand extends Command {
      */
     @Override
     public boolean execute() {
-//            if (!silent) Duke.getUI().showError("Invalid Command Received");
+        //if (!silent) {
+        //    Duke.getUI().showError("Invalid Command Received");
+        //}
         return false;
     }
 }

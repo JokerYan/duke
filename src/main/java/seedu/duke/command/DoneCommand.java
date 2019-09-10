@@ -19,20 +19,23 @@ public class DoneCommand extends Command {
     }
 
     /**
-     * Execute the done command by calling the markDone function of the
-     * task list.
+     * Execute the done command by calling the markDone function of the task list.
      *
-     * @return a flag whether the task is successfully marked as done.
-     * Returns false if the markDone function throws exception.
+     * @return a flag whether the task is successfully marked as done. Returns false if the markDone function
+     *      throws exception.
      */
     @Override
     public boolean execute() {
         try {
             String msg = Duke.getTaskList().markDone(index);
-            if (!silent) Duke.getUI().showResponse(msg);
+            if (!silent) {
+                Duke.getUI().showResponse(msg);
+            }
             return true;
         } catch (Parser.UserInputException e) {
-            if (!silent) Duke.getUI().showError(e.toString());
+            if (!silent) {
+                Duke.getUI().showError(e.toString());
+            }
             return false;
         }
     }

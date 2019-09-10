@@ -1,21 +1,26 @@
 package seedu.duke;
 
-import seedu.duke.command.*;
+import seedu.duke.command.AddCommand;
+import seedu.duke.command.Command;
+import seedu.duke.command.DeleteCommand;
+import seedu.duke.command.DoneCommand;
+import seedu.duke.command.ExitCommand;
+import seedu.duke.command.FindCommand;
+import seedu.duke.command.InvalidCommand;
+import seedu.duke.command.ListCommand;
 import seedu.duke.task.Task;
 
 import java.text.ParseException;
 import java.util.Date;
 
 /**
- * A class that contains helper functions used to process user inputs.
- * It also contains UserInputException that is used across the project
- * to handle the unexpected user input.
+ * A class that contains helper functions used to process user inputs. It also contains UserInputException
+ * that is used across the project to handle the unexpected user input.
  */
 public class Parser {
     /**
-     * Parse the user/file input as command. It returns a command that
-     * is not yet executed. It also needs to get a UI from Duke to display
-     * the messages.
+     * Parse the user/file input as command. It returns a command that is not yet executed. It also needs to
+     * get a UI from Duke to display the messages.
      *
      * @param input the user/file input that is to be parsed to a command
      * @return the parse result, which is a command ready to be executed
@@ -82,16 +87,14 @@ public class Parser {
     }
 
     /**
-     * Parse the specific part of a user/file input that is relevant to a
-     * task. A successful parsing always returns an AddCommand, as it is
-     * assumed that an input starting with a task name is an add command.
+     * Parse the specific part of a user/file input that is relevant to a task. A successful parsing always
+     * returns an AddCommand, as it is assumed that an input starting with a task name is an add command.
      *
-     * @param taskList target task list to which the new task is to be added
-     *                 to
-     * @param input user/file input ready to be parsed
+     * @param taskList target task list to which the new task is to be added to
+     * @param input    user/file input ready to be parsed
      * @return an AddCommand of the task parsed from the input
-     * @throws UserInputException an exception when the parsing is failed,
-     * probably due to the wrong format of input
+     * @throws UserInputException an exception when the parsing is failed, probably due to the wrong format of
+     *                            input
      */
     public static Command parseTask(TaskList taskList, String input) throws UserInputException {
         Task.TaskType taskType;
@@ -107,7 +110,8 @@ public class Parser {
         } else if (input.startsWith("deadline")) {
             taskType = Task.TaskType.Deadline;
             if (input.length() <= 9) {
-                throw new Parser.UserInputException("☹ OOPS!!! The description of a deadline cannot be empty.");
+                throw new Parser.UserInputException("☹ OOPS!!! The description of a deadline cannot be "
+                        + "empty.");
             }
             input = input.substring(9);
             if (!input.contains(" /by ")) {
@@ -118,7 +122,8 @@ public class Parser {
             try {
                 time = Task.parseDate(timeString);
             } catch (ParseException e) {
-                throw new Parser.UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
+                throw new Parser.UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy "
+                        + "HHmm format.");
             }
         } else if (input.startsWith("event")) {
             taskType = Task.TaskType.Event;
@@ -134,7 +139,8 @@ public class Parser {
             try {
                 time = Task.parseDate(timeString);
             } catch (ParseException e) {
-                throw new Parser.UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy HHmm format.");
+                throw new Parser.UserInputException("Wrong date/time format. Write date/time in dd/MM/yyyy "
+                        + "HHmm format.");
             }
         } else {
             throw new Parser.UserInputException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -143,15 +149,14 @@ public class Parser {
     }
 
     /**
-     * An type of exception dedicated to handling the unexpected user/file
-     * input. The message contains more specific information.
+     * An type of exception dedicated to handling the unexpected user/file input. The message contains more
+     * specific information.
      */
     public static class UserInputException extends Exception {
         private String msg;
 
         /**
-         * Instantiate the exception with a message, which is ready to be
-         * displayed by the UI.
+         * Instantiate the exception with a message, which is ready to be displayed by the UI.
          *
          * @param msg the message that is ready to be displayed by UI.
          */
@@ -161,8 +166,7 @@ public class Parser {
         }
 
         /**
-         * Convert the exception ot string by returning its message, so
-         * that it can be displayed by the UI.
+         * Convert the exception ot string by returning its message, so that it can be displayed by the UI.
          *
          * @return the message of the exception
          */

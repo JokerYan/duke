@@ -3,20 +3,24 @@ package seedu.duke;
 import seedu.duke.command.Command;
 import seedu.duke.task.Task;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.Scanner;
 
 /**
- * Storage class contains the helper functions that is used to interact with
- * the file storing the task information.
+ * Storage class contains the helper functions that is used to interact with the file storing the task
+ * information.
  */
 public class Storage {
     /**
-     * This function clear the content of the file and write all the
-     * information of the tasks in the task list to that file. This file
-     * follows similar structure as the user input and can be used to
-     * re-construct the task list later.
+     * This function clear the content of the file and write all the information of the tasks in the task list
+     * to that file. This file follows similar structure as the user input and can be used to re-construct the
+     * task list later.
      *
      * @param taskList the list of task that is to be written to the file
      */
@@ -46,10 +50,9 @@ public class Storage {
     }
 
     /**
-     * This function read the file that is previously saved to re-construct
-     * and return the task list from the file information. Note: if any
-     * error occurs during the reading or parsing of the file, an empty
-     * task list will always be returned for the integrity of data.
+     * This function read the file that is previously saved to re-construct and return the task list from the
+     * file information. Note: if any error occurs during the reading or parsing of the file, an empty task
+     * list will always be returned for the integrity of data.
      *
      * @return task list re-constructed from the save file
      */
@@ -106,17 +109,15 @@ public class Storage {
     }
 
     /**
-     * Exception that belongs to the process of storing and reading of file
+     * Exception that belongs to the process of storing and reading of file.
      */
     public static class StorageException extends Exception {
         private String msg;
 
         /**
-         * Instantiation of storage exception with a message, which can be
-         * later displayed by the UI.
+         * Instantiation of storage exception with a message, which can be later displayed by the UI.
          *
-         * @param msg the message of the exception that can be displayed by
-         *            UI
+         * @param msg the message of the exception that can be displayed by UI
          */
         public StorageException(String msg) {
             super();

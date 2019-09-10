@@ -1,20 +1,18 @@
 package seedu.duke.command;
 
 /**
- * This is an abstract command that all kinds of command inherit from.
- * It has execute() function to be overridden and can be set silent for
- * UI output.
+ * This is an abstract command that all kinds of command inherit from. It has execute() function to be
+ * overridden and can be set silent for UI output.
  */
 public abstract class Command {
     /**
-     * A flag whether UI output is turned off. Default to be false, so
-     * UI output is default to be turned on.
+     * A flag whether UI output is turned off. Default to be false, so UI output is default to be turned on.
      */
     protected boolean silent = false;
 
     /**
-     * Execute the command. This method is to be overridden to specific
-     * functionality by different types of command themselves.
+     * Execute the command. This method is to be overridden to specific functionality by different types of
+     * command themselves.
      *
      * @return a flag whether the command is successfully executed.
      */
